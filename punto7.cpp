@@ -96,6 +96,13 @@ int misterio(Nodo* nodo) {
         return misterio(nodo->getSiguiente()) + 1;
 }
 
+Nodo* desconocido(Nodo* nodo) {
+    if (nodo == nullptr || nodo->getSiguiente() == nullptr)
+        return nodo;
+    else
+        return desconocido(nodo->getSiguiente());
+}
+
 int main() {
     Lista lista;
     lista.AgregarOrdenado(new Nodo(6));
@@ -112,6 +119,11 @@ int main() {
 
     cout << "\nCantidad de nodos : ";
     cout << misterio(lista.getInicio()) << endl;
+
+    Nodo* ultimo = desconocido(lista.getInicio());
+    if (ultimo != nullptr) {
+        cout << "Ultimo nodo : " << ultimo->getDato() << endl;
+    }
 
     return 0;
 }
