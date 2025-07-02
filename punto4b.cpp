@@ -1,39 +1,125 @@
 #include <iostream>
 using namespace std;
-struct Nodo {
+
+class Nodo {
+private:
     int dato;
     Nodo* siguiente;
+
+public:
+    Nodo(int valor) {
+        dato = valor;
+        siguiente = nullptr;
+    }
+
+    int getDato() {
+        return dato;
+    }
+
+    Nodo* getSiguiente() {
+        return siguiente;
+    }
+
+    void setSiguiente(Nodo* nodo) {
+        siguiente = nodo;
+    }
 };
 
-struct Cola {
+class Cola {
+private:
     Nodo* frente;
     Nodo* final;
-    int cantidad; 
+    int cantidad;
 
+public:
+    Cola() {
+        frente = nullptr;
+        final = nullptr;
+        cantidad = 0;
+    }
+
+    bool estaVacia() const {
+        return frente == nullptr;
+    }
+
+    void agregar(int valor) {
+        Nodo* nuevo = new Nodo(valor);
+        if (estaVacia()) {
+            frente = final = nuevo;
+        } else {
+            final->setSiguiente(nuevo);
+            final = nuevo;
+        }
+        cantidad++;
+    }
+
+    int quitar() {
+        if (estaVacia()) {
+            cout << "La cola está vacía.\n";
+            return -999;
+        }
+
+        Nodo* borrado = frente;
+        int valor = borrado->getDato();
+        frente = frente->getSiguiente();
+        if (frente == nullptr) {
+            final = nullptr;
+        }
+        delete borrado;
+        cantidad--;
+        return valor;
+    }
+
+    int verFrente() const {
+        if (!estaVacia())
+            return frente->getDato();
+        else {
+            cout << "Cola vacía.\n";
+            return -999;
+        }
+    }
+
+    int verFinal() const {
+        if (!estaVacia())
+            return final->getDato();
+        else {
+            cout << "Cola vacía.\n";
+            return -999;
+        }
+    }
+
+    int obtenerCantidad() const {
+        return cantidad;
+    }
+
+    void mostrar() const {
+        if (estaVacia()) {
+            cout << "Cola vacía.\n";
+            return;
+        }
+
+        Nodo* aux = frente;
+        cout << "Contenido de la cola (frente → final): ";
+        while (aux != nullptr) {
+            cout << aux->getDato() << " ";
+            aux = aux->getSiguiente();
+        }
+        cout << endl;
+    }
 };
-
-void iniciarCola(Cola &c);
-bool colaVacia(const Cola &c);
-void agregarCola(Cola &c, int valor);     
-int  quitarCola(Cola &c);                 
-int  frenteCola(const Cola &c);           
-int  finalCola(const Cola &c);            
-void mostrarCola(Cola c);
-int cantidadElementos(const Cola &c);
 
 int main() {
     Cola c;
-    iniciarCola(c);
-
     int opcion, valor;
+
     do {
-        cout << "\n---  MENÚ COLA DINÁMICA  ---\n"
+        cout << "\n---  MENÚ COLA DINÁMICA (OOP) ---\n"
              << "1. Insertar \n"
              << "2. Extraer \n"
              << "3. Ver frente\n"
              << "4. Ver final\n"
              << "5. Mostrar cola\n"
-            << "6. Cantidad de elementos\n"
+             << "6. Cantidad de elementos\n"
              << "0. Salir\n"
              << "Seleccione una opción: ";
 
@@ -43,98 +129,33 @@ int main() {
             case 1:
                 cout << "Valor a insertar: ";
                 cin >> valor;
-                agregarCola(c, valor);
+                c.agregar(valor);
                 break;
             case 2:
-                if (!colaVacia(c))
-                    cout << "Extraído: " << quitarCola(c) << endl;
-                else
-                    cout << "Cola vacía.\n";
+                cout << "Extraído: " << c.quitar() << endl;
                 break;
             case 3:
-                if (!colaVacia(c))
-                    cout << "Frente: " << frenteCola(c) << endl;
-                else
-                    cout << "Cola vacía.\n";
+                cout << "Frente: " << c.verFrente() << endl;
                 break;
             case 4:
-                if (!colaVacia(c))
-                    cout << "Final: " << finalCola(c) << endl;
-                else
-                    cout << "Cola vacía.\n";
+                cout << "Final: " << c.verFinal() << endl;
                 break;
             case 5:
-                mostrarCola(c);
+                c.mostrar();
                 break;
-             case 6:
-             cout << "Elementos en la cola: " << cantidadElementos(c) << endl;
-                 break;
+            case 6:
+                cout << "Elementos en la cola: " << c.obtenerCantidad() << endl;
+                break;
             case 0:
                 cout << "Hasta luego.\n";
                 break;
             default:
                 cout << "Opción inválida.\n";
         }
+
     } while (opcion != 0);
 
     return 0;
 }
 
-void iniciarCola(Cola &c) {
-    c.frente = c.final = nullptr;    
-    c.cantidad = 0;                  
-}
-
-bool colaVacia(const Cola &c) {
-    return c.frente == nullptr;                      
-}
-
-void agregarCola(Cola &c, int valor) {
-    Nodo* nuevo = new Nodo{valor, nullptr};
-    if (colaVacia(c)) {
-        c.frente = c.final = nuevo;                   
-    } else {
-        c.final->siguiente = nuevo;                   
-        c.final = nuevo;                              
-    }
-    c.cantidad++;
-}
-
-int quitarCola(Cola &c) {
-    if (colaVacia(c)) {
-        cout << "La cola está vacía.\n";              
-        return -999;                                  
-    }
-    Nodo* borrado = c.frente;
-    int dato = borrado->dato;
-    c.frente = c.frente->siguiente;                   
-    if (c.frente == nullptr) c.final = nullptr;       
-    delete borrado;
-    c.cantidad--;
-    return dato;
-}
-
-int frenteCola(const Cola &c) {
-    return colaVacia(c) ? -999 : c.frente->dato;
-}
-
-int finalCola(const Cola &c) {
-    return colaVacia(c) ? -999 : c.final->dato;
-}
-
-void mostrarCola(Cola c) {
-    if (colaVacia(c)) {
-        cout << "Cola vacía.\n";
-        return;
-    }
-    cout << "Contenido de la cola (frente → final): ";
-    while (c.frente != nullptr) {
-        cout << c.frente->dato << " ";
-        c.frente = c.frente->siguiente;
-    }
-    cout << endl;
-}
-int cantidadElementos(const Cola &c) {
-    return c.cantidad;
-}
 
