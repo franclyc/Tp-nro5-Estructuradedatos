@@ -1,86 +1,104 @@
 #include <iostream>
 using namespace std;
-struct Nodo {
+
+class Nodo {
+private:
     int dato;
     Nodo* siguiente;
+
+public:
+    Nodo(int valor) {
+        dato = valor;
+        siguiente = nullptr;
+    }
+
+    int getDato() {
+        return dato;
+    }
+
+    void setDato(int valor) {
+        dato = valor;
+    }
+
+    Nodo* getSiguiente() {
+        return siguiente;
+    }
+
+    void setSiguiente(Nodo* nodo) {
+        siguiente = nodo;
+    }
 };
-struct Lista {
+
+class Lista {
+private:
     Nodo* inicio;
     Nodo* final;
     int cantidad;
 
+public:
+    Lista() {
+        inicio = nullptr;
+        final = nullptr;
+        cantidad = 0;
+    }
+
+    void agregarFinal(int valor) {
+        Nodo* nuevo = new Nodo(valor);
+        if (inicio == nullptr) {
+            inicio = nuevo;
+            final = nuevo;
+        } else {
+            final->setSiguiente(nuevo);
+            final = nuevo;
+        }
+        cantidad++;
+    }
+
+    Nodo* eliminarInicio() {
+        Nodo* borrado = nullptr;
+        if (inicio != nullptr) {
+            borrado = inicio;
+            inicio = inicio->getSiguiente();
+            borrado->setSiguiente(nullptr);
+            if (inicio == nullptr) {
+                final = nullptr;
+            }
+            cantidad--;
+        }
+        return borrado;
+    }
+
+    void mostrarLista() {
+        Nodo* aux = inicio;
+        while (aux != nullptr) {
+            cout << aux->getDato() << " -> ";
+            aux = aux->getSiguiente();
+        }
+        cout << "null" << endl;
+    }
+
+    int obtenerCantidad() {
+        return cantidad;
+    }
 };
-void iniciar_lista(Lista &lista);
-void agregar_final(Lista &lista, int valor);
-Nodo* eliminar_inicio(Lista &lista);
-void mostrar_lista(Lista lista);
-int obtener_cantidad(Lista lista);
 
-int main(){
-     Lista miLista;
-    iniciar_lista(miLista);
+int main() {
+    Lista miLista;
 
-    agregar_final(miLista, 5);
-    agregar_final(miLista, 10);
-    agregar_final(miLista, 3);
+    miLista.agregarFinal(5);
+    miLista.agregarFinal(10);
+    miLista.agregarFinal(3);
 
-    mostrar_lista(miLista);
+    miLista.mostrarLista();
+    cout << "Cantidad de elementos: " << miLista.obtenerCantidad() << endl;
 
-    cout << "Cantidad de elementos: " << obtener_cantidad(miLista) << endl;
+    Nodo* eliminado = miLista.eliminarInicio();
+    if (eliminado != nullptr) {
+        delete eliminado; // liberar memoria
+    }
 
-    eliminar_inicio(miLista);
-    mostrar_lista(miLista);
-
-    cout << "Cantidad de elementos: " << obtener_cantidad(miLista) << endl;
+    miLista.mostrarLista();
+    cout << "Cantidad de elementos: " << miLista.obtenerCantidad() << endl;
 
     return 0;
-
-    
-}
-void iniciar_lista(Lista &lista) {
-    lista.inicio = nullptr;
-    lista.final = nullptr;
-    lista.cantidad = 0;
-}
-void agregar_final(Lista &lista, int valor) {
-    Nodo* nuevo = new Nodo{valor, nullptr};
-    if (lista.inicio == nullptr) {
-        lista.inicio = nuevo;
-        lista.final = nuevo;
-    } else {
-        lista.final->siguiente = nuevo;
-        lista.final = nuevo;
-    }
-    lista.cantidad++;
-}   
-
-Nodo* eliminar_inicio(Lista &lista) {
-        Nodo* borrado;
-
-    if (lista.inicio == nullptr) {
-        borrado = nullptr;
-    } else {
-        borrado = lista.inicio;
-        lista.inicio = borrado->siguiente;
-        borrado->siguiente = nullptr;
-
-        if (lista.inicio == nullptr) {
-            lista.final = nullptr;
-        }
-
-        lista.cantidad--;
-    }
-    return borrado;
-}
-
-void mostrar_lista(Lista lista) {
-    Nodo* aux = lista.inicio;
-    while (aux != nullptr) {
-        cout << aux->dato << " -> ";
-        aux = aux->siguiente;
-    }
-    cout << "null" << endl;
-}
-int obtener_cantidad(Lista lista) {
-    return lista.cantidad;
 }
