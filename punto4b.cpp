@@ -8,6 +8,8 @@ struct Nodo {
 struct Cola {
     Nodo* frente;
     Nodo* final;
+    int cantidad; 
+
 };
 
 void iniciarCola(Cola &c);
@@ -17,6 +19,7 @@ int  quitarCola(Cola &c);
 int  frenteCola(const Cola &c);           
 int  finalCola(const Cola &c);            
 void mostrarCola(Cola c);
+int cantidadElementos(const Cola &c);
 
 int main() {
     Cola c;
@@ -30,8 +33,10 @@ int main() {
              << "3. Ver frente\n"
              << "4. Ver final\n"
              << "5. Mostrar cola\n"
+            << "6. Cantidad de elementos\n"
              << "0. Salir\n"
              << "Seleccione una opción: ";
+
         cin >> opcion;
 
         switch (opcion) {
@@ -61,6 +66,9 @@ int main() {
             case 5:
                 mostrarCola(c);
                 break;
+             case 6:
+             cout << "Elementos en la cola: " << cantidadElementos(c) << endl;
+                 break;
             case 0:
                 cout << "Hasta luego.\n";
                 break;
@@ -73,7 +81,8 @@ int main() {
 }
 
 void iniciarCola(Cola &c) {
-    c.frente = c.final = nullptr;                     
+    c.frente = c.final = nullptr;    
+    c.cantidad = 0;                  
 }
 
 bool colaVacia(const Cola &c) {
@@ -88,6 +97,7 @@ void agregarCola(Cola &c, int valor) {
         c.final->siguiente = nuevo;                   
         c.final = nuevo;                              
     }
+    c.cantidad++;
 }
 
 int quitarCola(Cola &c) {
@@ -100,6 +110,7 @@ int quitarCola(Cola &c) {
     c.frente = c.frente->siguiente;                   
     if (c.frente == nullptr) c.final = nullptr;       
     delete borrado;
+    c.cantidad--;
     return dato;
 }
 
@@ -123,3 +134,7 @@ void mostrarCola(Cola c) {
     }
     cout << endl;
 }
+int cantidadElementos(const Cola &c) {
+    return c.cantidad;
+}
+
