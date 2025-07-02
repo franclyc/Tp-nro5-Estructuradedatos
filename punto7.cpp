@@ -78,7 +78,6 @@ public:
     }
 };
 
-// ✅ Función enigma (del punto 7)
 void enigma(Nodo* nodo) {
     if (nodo != nullptr) {
         if (nodo->getSiguiente() == nullptr)
@@ -88,6 +87,13 @@ void enigma(Nodo* nodo) {
             cout << nodo->getDato() << endl;
         }
     }
+}
+
+int misterio(Nodo* nodo) {
+    if (nodo == nullptr)
+        return 0;
+    else
+        return misterio(nodo->getSiguiente()) + 1;
 }
 
 int main() {
@@ -101,8 +107,11 @@ int main() {
     cout << "Lista normal (ordenada):" << endl;
     lista.MostrarLista();
 
-    cout << "\n orden inverso:" << endl;
+    cout << "\nOrden inverso :" << endl;
     enigma(lista.getInicio());
+
+    cout << "\nCantidad de nodos : ";
+    cout << misterio(lista.getInicio()) << endl;
 
     return 0;
 }
