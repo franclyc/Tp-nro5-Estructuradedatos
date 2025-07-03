@@ -109,6 +109,25 @@ void DecimalABinario(tlista& lista, int numero) {
         numero = numero / 2;
     }
 }
+void MostrarMayorYMenor(tlista lista) {
+    if (lista.inicio == NULL) {
+        cout << "La lista está vacía.\n";
+        return;
+    }
+
+    int mayor = lista.inicio->dato;
+    int menor = lista.inicio->dato;
+
+    pnodo aux = lista.inicio->sig;  
+
+    while (aux != NULL) {
+        if (aux->dato > mayor) mayor = aux->dato;
+        if (aux->dato < menor) menor = aux->dato;
+        aux = aux->sig;
+    }
+
+    cout << "Valor mayor: " << mayor << endl;
+}
 
 int main() {
 	tlista lista;
