@@ -128,6 +128,39 @@ void MostrarMayorYMenor(tlista lista) {
 
     cout << "Valor mayor: " << mayor << endl;
 }
+void EliminarMultiplosDeTres(tlista& lista) {
+    pnodo aux = lista.inicio;
+
+    while (aux != NULL) {
+        pnodo actual = aux;
+        aux = aux->sig;   
+        if (actual->dato % 3 == 0) {
+            
+            if (actual == lista.inicio && actual == lista.fin) {
+                lista.inicio = NULL;
+                lista.fin = NULL;
+            }
+            else if (actual == lista.inicio) {
+                lista.inicio = actual->sig;
+                lista.inicio->ant = NULL;
+            }
+            else if (actual == lista.fin) {
+                lista.fin = actual->ant;
+                lista.fin->sig = NULL;
+            }
+            else {
+                actual->ant->sig = actual->sig;
+                actual->sig->ant = actual->ant;
+            }
+
+            delete actual;
+        }
+    }
+
+    cout << "Lista actualizada (sin múltiplos de 3): ";
+    MostrarLista(lista);
+}
+
 
 int main() {
 	tlista lista;
