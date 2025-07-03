@@ -119,3 +119,70 @@ public:
         cout << endl;
     }
 };
+int main() {
+    ListaDoble lista;
+    int opcion, valor;
+
+    do {
+        cout << "\n--- MENU ---\n";
+        cout << "1. Agregar al inicio\n";
+        cout << "2. Agregar al final\n";
+        cout << "3. Agregar ordenado\n";
+        cout << "4. Quitar del inicio\n";
+        cout << "5. Quitar del final\n";
+        cout << "6. Quitar nodo por valor\n";
+        cout << "7. Buscar valor\n";
+        cout << "8. Mostrar lista\n";
+        cout << "0. Salir\n";
+        cout << "Ingrese una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                cout << "Ingrese valor: ";
+                cin >> valor;
+                lista.agregarInicio(valor);
+                break;
+            case 2:
+                cout << "Ingrese valor: ";
+                cin >> valor;
+                lista.agregarFinal(valor);
+                break;
+            case 3:
+                cout << "Ingrese valor: ";
+                cin >> valor;
+                lista.agregarOrdenado(valor);
+                break;
+            case 4:
+                lista.quitarInicio();
+                cout << "Primer nodo eliminado.\n";
+                break;
+            case 5:
+                lista.quitarFinal();
+                cout << "Ultimo nodo eliminado.\n";
+                break;
+            case 6:
+                cout << "Ingrese valor a eliminar: ";
+                cin >> valor;
+                lista.quitarNodo(valor);
+                break;
+            case 7:
+                cout << "Ingrese valor a buscar: ";
+                cin >> valor;
+                cout << (lista.buscar(valor) ? "Encontrado\n" : "No encontrado\n");
+                break;
+            case 8:
+                cout << "Lista actual: ";
+                lista.mostrar();
+                break;
+            case 0:
+                cout << "Saliendo...\n";
+                break;
+            default:
+                cout << "Opcion invalida.\n";
+        }
+
+    } while (opcion != 0);
+
+    return 0;
+}
