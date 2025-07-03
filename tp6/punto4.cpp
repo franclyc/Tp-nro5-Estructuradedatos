@@ -118,7 +118,7 @@ void MostrarMayorYMenor(tlista lista) {
     int mayor = lista.inicio->dato;
     int menor = lista.inicio->dato;
 
-    pnodo aux = lista.inicio->sig;  
+    pnodo aux = lista.inicio->sig;      
 
     while (aux != NULL) {
         if (aux->dato > mayor) mayor = aux->dato;
@@ -144,6 +144,7 @@ int main() {
 		cout << "4. Quitar del final\n";
 		cout << "5. Mostrar lista\n";
         cout << "6. Convertir decimal a binario\n";
+        cout << "7. Mostrar mayor y menor\n";
 		cout << "0. Salir\n";
 		cout << "Ingrese una opcion: ";
 		cin >> opcion;
@@ -180,6 +181,9 @@ int main() {
             cout << "Numero en binario: ";
             MostrarLista(lista);
         break;
+        case 7:
+            MostrarMayorYMenor(lista);
+            break;
 		case 0:
 			cout << "Saliendo del programa.\n";
 			break;
