@@ -178,6 +178,7 @@ int main() {
 		cout << "5. Mostrar lista\n";
         cout << "6. Convertir decimal a binario\n";
         cout << "7. Mostrar mayor y menor\n";
+        cout << "8. Eliminar múltiplos de 3\n";
 		cout << "0. Salir\n";
 		cout << "Ingrese una opcion: ";
 		cin >> opcion;
@@ -216,6 +217,9 @@ int main() {
         break;
         case 7:
             MostrarMayorYMenor(lista);
+            break;
+        case 8:
+            EliminarMultiplosDeTres(lista);
             break;
 		case 0:
 			cout << "Saliendo del programa.\n";
