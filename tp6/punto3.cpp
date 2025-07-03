@@ -93,7 +93,22 @@ void MostrarLista(tlista lista) {
 	}
 	cout << endl;
 }
+void DecimalABinario(tlista& lista, int numero) {
+    if (numero == 0) {
+        pnodo nuevo;
+        CrearNodo(nuevo, 0);
+        AgregarInicio(lista, nuevo);
+        return;
+    }
 
+    while (numero > 0) {
+        int bit = numero % 2;
+        pnodo nuevo;
+        CrearNodo(nuevo, bit);
+        AgregarInicio(lista, nuevo);  
+        numero = numero / 2;
+    }
+}
 
 int main() {
 	tlista lista;
@@ -109,6 +124,7 @@ int main() {
 		cout << "3. Quitar del inicio\n";
 		cout << "4. Quitar del final\n";
 		cout << "5. Mostrar lista\n";
+        cout << "6. Convertir decimal a binario\n";
 		cout << "0. Salir\n";
 		cout << "Ingrese una opcion: ";
 		cin >> opcion;
@@ -137,6 +153,14 @@ int main() {
 		case 5:
 			MostrarLista(lista);
 			break;
+        case 6:
+            cout << "Ingrese numero decimal: ";
+            cin >> valor;
+            IniciarLista(lista);  
+            DecimalABinario(lista, valor);
+            cout << "Numero en binario: ";
+            MostrarLista(lista);
+        break;
 		case 0:
 			cout << "Saliendo del programa.\n";
 			break;
